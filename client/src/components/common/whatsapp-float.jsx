@@ -7,9 +7,17 @@ function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-6 right-6 z-50"
+      className="fixed bottom-6 right-6 z-50 group flex items-center"
     >
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transform-gpu transition">
+      {/* Pulsing ring for extra visibility */}
+      <span className="absolute inset-0 h-16 w-16 rounded-full bg-[#25D366] opacity-75 animate-ping"></span>
+
+      {/* Tooltip label */}
+      <span className="pointer-events-none absolute right-[4.5rem] whitespace-nowrap rounded-md bg-black/80 px-3 py-1.5 text-sm font-medium text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
+        Chat with us on WhatsApp
+      </span>
+
+      <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transform-gpu transition">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

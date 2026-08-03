@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
+import { getOptimizedImageUrl } from "@/lib/utils";
 
 function ShoppingProductTile({
   product,
@@ -27,7 +28,7 @@ function ShoppingProductTile({
       <div onClick={onProductClick} className="cursor-pointer">
         <div className="relative">
           <img
-            src={product?.images?.[0] || product?.image}
+            src={getOptimizedImageUrl(product?.images?.[0] || product?.image, { width: 400 })}
             alt={product?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />

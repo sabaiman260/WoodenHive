@@ -31,6 +31,14 @@ const initialFormData = {
   colors: "",
   totalStock: "",
   averageReview: 0,
+  woodType: "",
+  dimensions: "",
+  weight: "",
+  finish: "",
+  careInstructions: "",
+  deliveryTime: "",
+  metaTitle: "",
+  metaKeywords: "",
 };
 
 function AdminProducts() {
@@ -112,7 +120,12 @@ function AdminProducts() {
   function isFormValid() {
     // require these fields only
     const required = ["title", "description", "category", "price", "totalStock"];
-    return required.every((key) => formData[key] !== null && formData[key] !== "");
+    const hasRequired = required.every(
+      (key) => formData[key] !== null && formData[key] !== ""
+    );
+    // encourage complete, SEO-friendly product descriptions
+    const hasCompleteDescription = String(formData.description || "").trim().length >= 40;
+    return hasRequired && hasCompleteDescription;
   }
 
   useEffect(() => {

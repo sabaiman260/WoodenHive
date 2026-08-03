@@ -35,6 +35,14 @@ const addProduct = async (req, res) => {
       size,
       colors,
       averageReview,
+      woodType,
+      dimensions,
+      weight,
+      finish,
+      careInstructions,
+      deliveryTime,
+      metaTitle,
+      metaKeywords,
     } = req.body;
 
     console.log(averageReview, "averageReview");
@@ -51,6 +59,14 @@ const addProduct = async (req, res) => {
       size: size || "",
       colors: Array.isArray(colors) ? colors : colors ? String(colors).split(",").map((c) => c.trim()).filter(Boolean) : [],
       averageReview,
+      woodType: woodType || "",
+      dimensions: dimensions || "",
+      weight: weight || "",
+      finish: finish || "",
+      careInstructions: careInstructions || "",
+      deliveryTime: deliveryTime || "",
+      metaTitle: metaTitle || "",
+      metaKeywords: metaKeywords || "",
     });
 
     await newlyCreatedProduct.save();
@@ -102,6 +118,14 @@ const editProduct = async (req, res) => {
       size,
       colors,
       averageReview,
+      woodType,
+      dimensions,
+      weight,
+      finish,
+      careInstructions,
+      deliveryTime,
+      metaTitle,
+      metaKeywords,
     } = req.body;
 
     let findProduct = await Product.findById(id);
@@ -133,6 +157,15 @@ const editProduct = async (req, res) => {
         : String(colors).split(",").map((c) => c.trim()).filter(Boolean)
       : findProduct.colors;
     findProduct.averageReview = averageReview || findProduct.averageReview;
+    findProduct.woodType = woodType !== undefined ? woodType : findProduct.woodType;
+    findProduct.dimensions = dimensions !== undefined ? dimensions : findProduct.dimensions;
+    findProduct.weight = weight !== undefined ? weight : findProduct.weight;
+    findProduct.finish = finish !== undefined ? finish : findProduct.finish;
+    findProduct.careInstructions =
+      careInstructions !== undefined ? careInstructions : findProduct.careInstructions;
+    findProduct.deliveryTime = deliveryTime !== undefined ? deliveryTime : findProduct.deliveryTime;
+    findProduct.metaTitle = metaTitle !== undefined ? metaTitle : findProduct.metaTitle;
+    findProduct.metaKeywords = metaKeywords !== undefined ? metaKeywords : findProduct.metaKeywords;
 
     await findProduct.save();
     res.status(200).json({

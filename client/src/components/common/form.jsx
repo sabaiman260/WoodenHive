@@ -115,6 +115,9 @@ function CommonForm({
           <div className="grid w-full gap-1.5" key={controlItem.name}>
             <Label className="mb-1">{controlItem.label}</Label>
             {renderInputsByComponentType(controlItem)}
+            {controlItem.helpText && (
+              <p className="text-xs text-muted-foreground">{controlItem.helpText}</p>
+            )}
           </div>
         ))}
       </div>

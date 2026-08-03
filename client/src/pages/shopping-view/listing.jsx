@@ -183,7 +183,12 @@ function ShoppingListing() {
       });
     }
 
-    // Note: Best Selling filter was removed per requirements.
+    // Best Selling: show highest-rated products first
+    if (activeFilter?.section === "bestSelling") {
+      result = [...result]
+        .filter((p) => (p.averageReview || 0) > 0)
+        .sort((a, b) => (b.averageReview || 0) - (a.averageReview || 0));
+    }
 
     return result;
   }

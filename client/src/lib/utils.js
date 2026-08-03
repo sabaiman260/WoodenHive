@@ -5,6 +5,21 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
+// Rewrite a Cloudinary delivery URL to auto-select the best format (e.g. WebP)
+// and compress it automatically, improving page load speed. Non-Cloudinary
+// URLs are returned unchanged.
+export function getOptimizedImageUrl(url, { width } = {}) {
+  if (!url || typeof url !== "string") return url;
+  if (!url.includes("res.cloudinary.com") || !url.includes("/upload/")) {
+    return url;
+  }
+
+  const transformation = ["f_auto", "q_auto"];
+  if (width) transformation.push(`w_${width}`);
+
+  return url.replace("/upload/", `/upload/${transformation.join(",")}/`);
+}
+
 // Generate or return a persistent guest user id for non-logged-in users
 export function getOrCreateGuestId() {
   if (typeof window === "undefined") return null;

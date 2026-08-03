@@ -14,6 +14,14 @@ const ProductSchema = new mongoose.Schema(
     size: String,
     colors: [String],
     averageReview: Number,
+    woodType: String,
+    dimensions: String,
+    weight: String,
+    finish: String,
+    careInstructions: String,
+    deliveryTime: String,
+    metaTitle: String,
+    metaKeywords: String,
   },
   { timestamps: true }
 );

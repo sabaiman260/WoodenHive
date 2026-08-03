@@ -12,7 +12,8 @@ import { Label } from "@/components/ui/label";
 import StarRatingComponent from "@/components/common/star-rating";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import { getOrCreateGuestId } from "@/lib/utils";
+import { getOrCreateGuestId, getOptimizedImageUrl } from "@/lib/utils";
+import { useSeo } from "@/lib/useSeo";
 import { ChevronLeft } from "lucide-react";
 import { gtmAddToCart, gtmViewItem } from "@/lib/gtm";
 
@@ -247,6 +248,16 @@ function ProductDetailsPage() {
       ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) / reviews.length
       : 0;
 
+  useSeo({
+    title: productDetails
+      ? productDetails.metaTitle || `${productDetails.title} | Wooden Hive Pakistan`
+      : undefined,
+    description: productDetails?.description
+      ? productDetails.description.slice(0, 160)
+      : undefined,
+    keywords: productDetails?.metaKeywords,
+  });
+
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
@@ -289,7 +300,7 @@ function ProductDetailsPage() {
                       mainImage === img ? "border-primary ring-2 ring-primary" : "border-gray-200"
                     }`}
                   >
-                    <img src={img} alt={`thumb-${idx}`} className="h-20 w-20 object-cover" />
+                    <img src={getOptimizedImageUrl(img, { width: 160 })} alt={`thumb-${idx}`} className="h-20 w-20 object-cover" />
                   </button>
                 ))}
               </div>
@@ -304,7 +315,7 @@ function ProductDetailsPage() {
                   onClick={onImageClick}
                 >
                   <img
-                    src={mainImage || productDetails?.image || ""}
+                    src={getOptimizedImageUrl(mainImage || productDetails?.image || "", { width: 1000 })}
                     alt={productDetails?.title || "Product Image"}
                     draggable={false}
                     style={{
@@ -393,6 +404,56 @@ function ProductDetailsPage() {
 
             <Separator className="my-6" />
 
+            {/* Product Information */}
+            {(productDetails?.woodType ||
+              productDetails?.dimensions ||
+              productDetails?.weight ||
+              productDetails?.finish ||
+              productDetails?.careInstructions ||
+              productDetails?.deliveryTime) && (
+              <div className="mb-6">
+                <h3 className="text-lg font-bold mb-3">Product Information</h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                  {productDetails?.woodType && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0">
+                      <dt className="font-semibold text-gray-700">Wood Type</dt>
+                      <dd className="text-gray-600">{productDetails.woodType}</dd>
+                    </div>
+                  )}
+                  {productDetails?.dimensions && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0">
+                      <dt className="font-semibold text-gray-700">Dimensions</dt>
+                      <dd className="text-gray-600">{productDetails.dimensions}</dd>
+                    </div>
+                  )}
+                  {productDetails?.weight && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0">
+                      <dt className="font-semibold text-gray-700">Weight</dt>
+                      <dd className="text-gray-600">{productDetails.weight}</dd>
+                    </div>
+                  )}
+                  {productDetails?.finish && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0">
+                      <dt className="font-semibold text-gray-700">Finish & Polish</dt>
+                      <dd className="text-gray-600">{productDetails.finish}</dd>
+                    </div>
+                  )}
+                  {productDetails?.careInstructions && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0 sm:col-span-2">
+                      <dt className="font-semibold text-gray-700 shrink-0 mr-4">Care Instructions</dt>
+                      <dd className="text-gray-600 text-right sm:text-left">{productDetails.careInstructions}</dd>
+                    </div>
+                  )}
+                  {productDetails?.deliveryTime && (
+                    <div className="flex justify-between border-b pb-2 sm:border-none sm:pb-0">
+                      <dt className="font-semibold text-gray-700">Delivery Time</dt>
+                      <dd className="text-gray-600">{productDetails.deliveryTime}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            )}
+
             {/* (Removed duplicate Price & Rating block — price shown above under product title) */}
 
             {/* Add to Cart Button */}
@@ -417,6 +478,11 @@ function ProductDetailsPage() {
                 ✓ {productDetails.totalStock} items in stock
               </p>
             )}
+
+            {/* Cash on Delivery Badge */}
+            <div className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-[#0f5c3a] bg-[#0f5c3a]/10 px-4 py-2 text-sm font-semibold text-[#0f5c3a]">
+              💵 Cash on Delivery Available
+            </div>
           </div>
         </div>
 
@@ -530,7 +596,7 @@ function ProductDetailsPage() {
                 {relatedProducts.length > 0 ? (
                   relatedProducts.map((product) => (
                     <div key={product._id} className="flex items-center gap-4 p-3 border rounded cursor-pointer" onClick={() => { navigate(`/shop/product/${product._id}`); }}>
-                      <img src={product.images?.[0] || product.image} alt={product.title} className="w-20 h-20 object-cover rounded" />
+                      <img src={getOptimizedImageUrl(product.images?.[0] || product.image, { width: 160 })} alt={product.title} className="w-20 h-20 object-cover rounded" />
                       <div>
                         <div className="text-sm font-semibold">{product.title}</div>
                         <div className="text-sm text-gray-600">Rs {product.price}</div>

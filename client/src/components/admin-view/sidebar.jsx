@@ -3,6 +3,7 @@ import {
   ChartNoAxesCombined,
   LayoutDashboard,
   ShoppingBasket,
+  Settings,
 } from "lucide-react";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +33,12 @@ const adminSidebarMenuItems = [
     label: "Reviews",
     path: "/admin/reviews",
     icon: <LayoutDashboard />,
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    path: "/admin/settings",
+    icon: <Settings />,
   },
 ];
 

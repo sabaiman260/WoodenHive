@@ -1,5 +1,6 @@
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { getOptimizedImageUrl } from "@/lib/utils";
 
 function AdminProductTile({
   product,
@@ -14,7 +15,7 @@ function AdminProductTile({
       <div>
         <div className="relative">
           <img
-            src={product?.images?.[0] || product?.image}
+            src={getOptimizedImageUrl(product?.images?.[0] || product?.image, { width: 400 })}
             alt={product?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />

@@ -26,7 +26,7 @@ function Footer() {
           <h3 className="text-sm font-semibold lowercase tracking-wide text-white">
             Payment
           </h3>
-          <div className="flex gap-7 items-center">
+          <div className="flex gap-7 items-center flex-wrap">
             {/* Visa */}
             <img
               src="/payment/visa.png"
@@ -45,6 +45,10 @@ function Footer() {
               alt="PayPak"
               className="h-8 w-auto object-contain"
             />
+            {/* Cash on Delivery Badge */}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0f5c3a] bg-[#0f5c3a]/20 px-3 py-1 text-xs font-semibold text-white">
+              💵 Cash on Delivery Available
+            </span>
           </div>
         </div>
       </div>

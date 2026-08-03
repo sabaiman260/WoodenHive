@@ -45,13 +45,17 @@ export const addProductFormElements = [
     name: "title",
     componentType: "input",
     type: "text",
-    placeholder: "Enter product title",
+    placeholder: "e.g. Handmade Sheesham Wood Coffee Table - Solid Wooden Furniture",
+    helpText:
+      "Use a descriptive, SEO-friendly title: include wood type, product type and a key feature (e.g. handmade, solid wood).",
   },
   {
     label: "Description",
     name: "description",
     componentType: "textarea",
-    placeholder: "Enter product description",
+    placeholder: "Describe the material, dimensions, finish, craftsmanship and ideal use (min. 40 characters)",
+    helpText:
+      "Write a complete description covering quality, wood type, dimensions and specifications so customers know exactly what they're buying.",
   },
   {
     label: "Category",
@@ -99,6 +103,64 @@ export const addProductFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter total stock",
+  },
+  {
+    label: "Wood Type",
+    name: "woodType",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. Sheesham, Pine, Oak",
+  },
+  {
+    label: "Dimensions (L x W x H)",
+    name: "dimensions",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. 120cm x 60cm x 75cm",
+  },
+  {
+    label: "Weight",
+    name: "weight",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. 15kg",
+  },
+  {
+    label: "Finish & Polish",
+    name: "finish",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. Matte lacquer finish",
+  },
+  {
+    label: "Care Instructions",
+    name: "careInstructions",
+    componentType: "textarea",
+    placeholder: "e.g. Wipe with a dry cloth, avoid direct sunlight and moisture",
+  },
+  {
+    label: "Delivery Time",
+    name: "deliveryTime",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. 3-5 business days",
+  },
+  {
+    label: "SEO Title (optional)",
+    name: "metaTitle",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. Handmade Sheesham Wood Wall Clock | Wooden Hive Pakistan",
+    helpText:
+      "Overrides the browser tab title & search result title. Format: Descriptive Product Name | Wooden Hive Pakistan.",
+  },
+  {
+    label: "SEO Keywords (optional, comma separated)",
+    name: "metaKeywords",
+    componentType: "input",
+    type: "text",
+    placeholder: "e.g. sheesham wood wall clock, wooden wall clock pakistan",
+    helpText: "Keywords customers might search for on Google.",
   },
 ];
 
@@ -170,6 +232,7 @@ export const filterOptions = {
     { id: "acacia", label: "Acacia" },
     { id: "oak", label: "Oak" },
   ],
+  bestSelling: [{ id: "true", label: "Best Selling" }],
 };
 
 export const sortOptions = [

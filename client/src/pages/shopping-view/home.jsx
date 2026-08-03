@@ -15,14 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 import { getOrCreateGuestId } from "@/lib/utils";
+import { useSeo } from "@/lib/useSeo";
 import { gtmAddToCart } from "@/lib/gtm";
-
-/* ================= HERO IMAGES ================= */
-const heroImages = [
-  { image: "/hero/slider1.jpg" },
-  { image: "/hero/slider2.jpg" },
-  { image: "/hero/slider3.jpg" },
-];
+import HeroSection from "@/components/shopping-view/hero-section";
 
 /* ================= IMAGE BASED CATEGORIES ================= */
 const categories = [
@@ -34,9 +29,11 @@ const categories = [
 ];
 
 function ShoppingHome() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-
+  useSeo({
+    title: "Wooden Hive Pakistan | Handmade Wooden Furniture & Decor",
+    description:
+      "Shop handmade wooden furniture, decor and gifts crafted from Sheesham, Pine and other quality woods. Cash on Delivery available across Pakistan.",
+  });
   const productList =
     useSelector((state) => state.shopProducts?.productList) || [];
   const productDetails =
@@ -80,14 +77,6 @@ function ShoppingHome() {
   }
 
   /* ================= EFFECTS ================= */
-  
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     dispatch(
@@ -102,42 +91,7 @@ function ShoppingHome() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* ================= HERO SECTION ================= */}
-      <div className="relative w-full h-[600px] overflow-hidden">
-        {heroImages.map((slide, index) => (
-          <img
-            key={index}
-            src={slide.image}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
-            alt={`hero-${index}`}
-          />
-        ))}
-
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prev) => (prev - 1 + heroImages.length) % heroImages.length
-            )
-          }
-          className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80"
-        >
-          <ChevronLeftIcon />
-        </Button>
-
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide((prev) => (prev + 1) % heroImages.length)
-          }
-          className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80"
-        >
-          <ChevronRightIcon />
-        </Button>
-      </div>
+      <HeroSection />
 
       {/* ================= CATEGORIES ================= */}
       <section className="py-12 bg-gray-50">
