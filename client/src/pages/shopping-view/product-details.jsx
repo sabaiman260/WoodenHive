@@ -357,8 +357,33 @@ function ProductDetailsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Image Gallery */}
           <div>
-            <div className="flex gap-4 flex-col-reverse md:flex-row">
-              <div className="flex gap-2 md:flex-col md:w-20">
+            <div
+              ref={imageContainerRef}
+              className={`relative overflow-hidden rounded-lg bg-gray-100 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseUp}
+              onClick={onImageClick}
+            >
+              <img
+                src={getOptimizedImageUrl(mainImage || productDetails?.image || "", { width: 1000 })}
+                alt={productDetails?.title || "Product Image"}
+                draggable={false}
+                style={{
+                  transform: `translate(${translate.x}px, ${translate.y}px) scale(${zoom})`,
+                  transition: isDragging ? 'none' : 'transform 0.18s ease',
+                  willChange: 'transform',
+                }}
+                className="w-full h-auto object-cover aspect-square"
+              />
+
+              {/* zoom-on-click (no visible controls) */}
+            </div>
+
+            {/* Additional product photos grid (fills space below the main image) */}
+            {imageList.length > 1 && (
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 mt-4">
                 {imageList.map((img, idx) => (
                   <button
                     key={idx}
@@ -368,36 +393,15 @@ function ProductDetailsPage() {
                       mainImage === img ? "border-primary ring-2 ring-primary" : "border-gray-200"
                     }`}
                   >
-                    <img src={getOptimizedImageUrl(img, { width: 160 })} alt={`thumb-${idx}`} className="h-20 w-20 object-cover" />
+                    <img
+                      src={getOptimizedImageUrl(img, { width: 300 })}
+                      alt={`${productDetails?.title || "Product"} photo ${idx + 1}`}
+                      className="w-full h-24 sm:h-28 object-cover"
+                    />
                   </button>
                 ))}
               </div>
-                <div className="flex-1">
-                <div
-                  ref={imageContainerRef}
-                  className={`relative overflow-hidden rounded-lg bg-gray-100 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-                  onMouseDown={onMouseDown}
-                  onMouseMove={onMouseMove}
-                  onMouseUp={onMouseUp}
-                  onMouseLeave={onMouseUp}
-                  onClick={onImageClick}
-                >
-                  <img
-                    src={getOptimizedImageUrl(mainImage || productDetails?.image || "", { width: 1000 })}
-                    alt={productDetails?.title || "Product Image"}
-                    draggable={false}
-                    style={{
-                      transform: `translate(${translate.x}px, ${translate.y}px) scale(${zoom})`,
-                      transition: isDragging ? 'none' : 'transform 0.18s ease',
-                      willChange: 'transform',
-                    }}
-                    className="w-full h-auto object-cover aspect-square"
-                  />
-
-                  {/* zoom-on-click (no visible controls) */}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Product Info */}
