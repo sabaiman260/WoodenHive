@@ -14,7 +14,7 @@ function ShoppingProductTile({
 
   const onProductClick = () => {
     // Always navigate to the product route (full page) instead of opening a modal.
-    navigate(`/shop/product/${product?._id}`);
+    navigate(`/shop/product/${product?.slug || product?._id}`);
   };
 
   const onAddToCart = () => {

@@ -199,6 +199,79 @@ function ProductDetailsPage() {
     });
   }
 
+  function handleBuyNow() {
+    const getCartItems = cartItems?.items || [];
+    const getCurrentProductId = productDetails?._id;
+    const getTotalStock = productDetails?.totalStock;
+    const hasColorOptions = (productDetails?.colors || []).length > 0;
+
+    if (hasColorOptions && !selectedColor) {
+      showToast({
+        title: "Please select a color first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === getCurrentProductId
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getTotalStock) {
+          showToast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
+
+    const userId = user?.id || getOrCreateGuestId();
+
+    dispatch(
+      addToCart({
+        userId,
+        productId: getCurrentProductId,
+        quantity: 1,
+        color: selectedColor,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(userId));
+        gtmAddToCart({ product: productDetails, quantity: 1, source: "product_detail_buy_now" });
+        navigate("/shop/checkout");
+      }
+    });
+  }
+
+  function handleOrderOnWhatsApp() {
+    const hasColorOptions = (productDetails?.colors || []).length > 0;
+
+    if (hasColorOptions && !selectedColor) {
+      showToast({
+        title: "Please select a color first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const price =
+      productDetails?.salePrice > 0 ? productDetails.salePrice : productDetails?.price || 0;
+    const lines = [
+      `Hello WoodenHive! I'd like to order:`,
+      `*${productDetails?.title || ""}*`,
+      selectedColor ? `Color: ${selectedColor}` : null,
+      `Price: Rs ${price}`,
+      `Link: ${window.location.href}`,
+    ].filter(Boolean);
+
+    const message = encodeURIComponent(lines.join("\n"));
+    window.open(`https://wa.me/923110719503?text=${message}`, "_blank", "noopener,noreferrer");
+  }
+
   function handleAddReview() {
     if (!reviewMsg.trim()) {
       showToast({
@@ -242,11 +315,6 @@ function ProductDetailsPage() {
       }
     });
   }
-
-  const averageReview =
-    reviews.length > 0
-      ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) / reviews.length
-      : 0;
 
   useSeo({
     title: productDetails
@@ -337,7 +405,7 @@ function ProductDetailsPage() {
             <div className="mb-6">
               <h1 className="text-4xl font-serif font-extrabold mb-3">{productDetails?.title}</h1>
 
-              {/* Price (moved up) + Rating */}
+              {/* Price (moved up) */}
               <div className="flex items-center gap-6 mb-4">
                 <div>
                   {productDetails?.salePrice > 0 ? (
@@ -348,10 +416,6 @@ function ProductDetailsPage() {
                   ) : (
                     <p className="text-3xl font-bold text-[#3b2a25]">Rs {productDetails?.price || 0}</p>
                   )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <StarRatingComponent rating={averageReview} />
-                  <span className="text-gray-600">({averageReview.toFixed(2)})</span>
                 </div>
               </div>
 
@@ -456,19 +520,34 @@ function ProductDetailsPage() {
 
             {/* (Removed duplicate Price & Rating block — price shown above under product title) */}
 
-            {/* Add to Cart Button */}
-            <div className="mb-6">
+            {/* Add to Cart / Buy Now / WhatsApp Buttons */}
+            <div className="mb-6 flex flex-col gap-3">
               {productDetails?.totalStock === 0 ? (
                 <Button className="w-full py-6 text-lg opacity-60 cursor-not-allowed" disabled>
                   Out of Stock
                 </Button>
               ) : (
-                <Button
-                  className="w-full py-6 text-lg font-semibold"
-                  onClick={handleAddToCart}
-                >
-                  Add to Cart
-                </Button>
+                <>
+                  <Button
+                    variant="outline"
+                    className="w-full py-6 text-lg font-semibold"
+                    onClick={handleAddToCart}
+                  >
+                    Add to Cart
+                  </Button>
+                  <Button
+                    className="w-full py-6 text-lg font-semibold bg-[#1f2937] hover:bg-[#111827] text-white"
+                    onClick={handleBuyNow}
+                  >
+                    Buy it now
+                  </Button>
+                  <Button
+                    className="w-full py-6 text-lg font-semibold bg-[#25D366] hover:bg-[#1ebe5b] text-white"
+                    onClick={handleOrderOnWhatsApp}
+                  >
+                    Order on WhatsApp
+                  </Button>
+                </>
               )}
             </div>
 
@@ -595,7 +674,7 @@ function ProductDetailsPage() {
               <div className="space-y-4">
                 {relatedProducts.length > 0 ? (
                   relatedProducts.map((product) => (
-                    <div key={product._id} className="flex items-center gap-4 p-3 border rounded cursor-pointer" onClick={() => { navigate(`/shop/product/${product._id}`); }}>
+                    <div key={product._id} className="flex items-center gap-4 p-3 border rounded cursor-pointer" onClick={() => { navigate(`/shop/product/${product.slug || product._id}`); }}>
                       <img src={getOptimizedImageUrl(product.images?.[0] || product.image, { width: 160 })} alt={product.title} className="w-20 h-20 object-cover rounded" />
                       <div>
                         <div className="text-sm font-semibold">{product.title}</div>

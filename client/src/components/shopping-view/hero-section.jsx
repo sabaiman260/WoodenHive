@@ -21,6 +21,39 @@ function HeroSection() {
     ? heroImages.map((img) => ({ image: img }))
     : defaultImages;
 
+  // Intro copy revealed piece by piece, in sync with each slide
+  const introSlides = [
+    {
+      title: "Bringing Nature Home with WoodenHive",
+      text: (
+        <>
+          At <strong>WoodenHive</strong>, we bring the natural beauty of wood
+          closer to your home through timeless{" "}
+          <strong>Sheesham wood handicrafts made in Pakistan</strong>.
+        </>
+      ),
+    },
+    {
+      title: "Rooted in Traditional Craftsmanship",
+      text: (
+        <>
+          Each piece reflects the natural grain, warmth, and character of{" "}
+          <strong>premium Sheesham wood</strong>, carefully crafted by skilled
+          Pakistani artisans.
+        </>
+      ),
+    },
+    {
+      title: "Handmade, Authentic, Timeless",
+      text: (
+        <>
+          Discover <strong>handmade wooden products from Pakistan</strong>{" "}
+          that add warmth, beauty, and a natural touch to everyday living.
+        </>
+      ),
+    },
+  ];
+
   useEffect(() => {
     setLoading(true);
     dispatch(getHeroImages()).finally(() => setLoading(false));
@@ -48,6 +81,39 @@ function HeroSection() {
           }}
         />
       ))}
+
+      {/* First slide already has its own baked-in text, so skip the overlay there */}
+      {currentSlide !== 0 && (
+        <>
+          {/* Dark gradient so overlay text stays readable on any image */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+          {/* Intro copy overlay, one piece revealed per slide */}
+          <div className="absolute inset-0 flex items-end md:items-center">
+            <div className="container mx-auto px-6 md:px-12 pb-10 md:pb-0">
+              <div className="max-w-xl">
+                {introSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`transition-opacity duration-1000 ${
+                      index === currentSlide % introSlides.length
+                        ? "opacity-100"
+                        : "opacity-0 absolute"
+                    }`}
+                  >
+                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 drop-shadow-md">
+                      {slide.title}
+                    </h2>
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed drop-shadow-md">
+                      {slide.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {!loading && displayImages.length > 1 && (
         <>

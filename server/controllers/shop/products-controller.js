@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Product = require("../../models/Product");
 
 const getFilteredProducts = async (req, res) => {
@@ -54,7 +55,10 @@ const getFilteredProducts = async (req, res) => {
 const getProductDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    // support both SEO-friendly slugs and legacy Mongo ObjectIds
+    const product = mongoose.Types.ObjectId.isValid(id)
+      ? await Product.findById(id)
+      : await Product.findOne({ slug: id });
 
     if (!product)
       return res.status(404).json({

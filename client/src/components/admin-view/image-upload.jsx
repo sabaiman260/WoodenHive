@@ -96,7 +96,7 @@ function ProductImageUpload({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${isEditMode ? "opacity-60" : ""} border-2 border-dashed rounded-lg p-4`}
+        className="border-2 border-dashed rounded-lg p-4"
       >
         <Input
           id="image-upload"
@@ -104,13 +104,12 @@ function ProductImageUpload({
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
-          disabled={isEditMode}
           multiple
         />
         {!uploadedImageUrl || (Array.isArray(uploadedImageUrl) && uploadedImageUrl.length === 0) ? (
           <Label
             htmlFor="image-upload"
-            className={`${isEditMode ? "cursor-not-allowed" : ""} flex flex-col items-center justify-center h-32 cursor-pointer`}
+            className="flex flex-col items-center justify-center h-32 cursor-pointer"
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image(s)</span>
@@ -124,17 +123,15 @@ function ProductImageUpload({
                 <FileIcon className="w-8 text-primary mr-2 h-8" />
               </div>
               <p className="text-sm font-medium">{Array.isArray(uploadedImageUrl) ? `${uploadedImageUrl.length} file(s) uploaded` : "1 file uploaded"}</p>
-              {!isEditMode ? (
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => inputRef.current && inputRef.current.click()}
-                    className="inline-flex items-center rounded-md bg-white/90 px-3 py-1 text-sm font-medium text-black shadow-sm hover:bg-white"
-                  >
-                    Add more
-                  </button>
-                </div>
-              ) : null}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => inputRef.current && inputRef.current.click()}
+                  className="inline-flex items-center rounded-md bg-white/90 px-3 py-1 text-sm font-medium text-black shadow-sm hover:bg-white"
+                >
+                  Add more
+                </button>
+              </div>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
