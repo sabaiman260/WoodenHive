@@ -17,9 +17,12 @@ function HeroSection() {
     { image: "/hero/slider3.jpg" },
   ];
 
-  const displayImages = heroImages && heroImages.length > 0
-    ? heroImages.map((img) => ({ image: img }))
-    : defaultImages;
+  // While the real images are still loading, render nothing to avoid flashing the defaults
+  const displayImages = loading
+    ? []
+    : heroImages && heroImages.length > 0
+      ? heroImages.map((img) => ({ image: img }))
+      : defaultImages;
 
   // Intro copy revealed piece by piece, in sync with each slide
   const introSlides = [
@@ -60,6 +63,7 @@ function HeroSection() {
   }, [dispatch]);
 
   useEffect(() => {
+    if (displayImages.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % displayImages.length);
     }, 5000);
