@@ -106,8 +106,13 @@ function Footer() {
               Support
             </p>
             <ul className="space-y-2 text-neutral-300">
-              <li>Phone: +923110719503</li>
-              <li>Email: info@woodenhive.com</li>
+              <li>+923110719503</li>
+              <li>info@woodenhive.com</li>
+
+              <li>
+                Plot # 3 Climax Garden Near Allena Hotel GT Road Gujranwala Pakistan
+              </li>
+              
             </ul>
           </div>
 
