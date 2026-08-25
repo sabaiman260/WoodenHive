@@ -17,16 +17,13 @@ import {
   fetchProductDetails,
 } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { getOrCreateGuestId } from "@/lib/utils";
+import { getOrCreateGuestId, sortByCategoryOrder } from "@/lib/utils";
 import { gtmAddToCart } from "@/lib/gtm";
 
-function createSearchParamsHelper(activeFilter) {
-  if (!activeFilter || !activeFilter.section || !activeFilter.value) return "";
-  return `${activeFilter.section}=${encodeURIComponent(activeFilter.value)}`;
-}
+const FILTER_SECTIONS = ["category", "price", "woodType", "bestSelling"];
 
 function ShoppingListing() {
   const dispatch = useDispatch();
@@ -35,13 +32,33 @@ function ShoppingListing() {
   );
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
-  const [activeFilter, setActiveFilter] = useState(null);
-  const [sort, setSort] = useState(null);
+  const [sort, setSort] = useState("category-order");
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const { toast } = useToast();
 
-  const categorySearchParam = searchParams.get("category");
+  // The URL is the single source of truth for the active filter, so there is
+  // no separate state to fall out of sync with it.
+  const activeFilter = useMemo(() => {
+    for (const section of FILTER_SECTIONS) {
+      const value = searchParams.get(section);
+      if (value) return { section, value };
+    }
+    return null;
+  }, [searchParams]);
+
+  // On first load with no filter in the URL, restore the last filter the
+  // user had selected (if any) by writing it into the URL once.
+  useEffect(() => {
+    if (activeFilter) return;
+    const stored = JSON.parse(sessionStorage.getItem("activeFilter") || "null");
+    if (stored?.section && stored?.value) {
+      setSearchParams(
+        new URLSearchParams(`${stored.section}=${encodeURIComponent(stored.value)}`)
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleSort(value) {
     setSort(value);
@@ -53,12 +70,18 @@ function ShoppingListing() {
     const currentlySelected =
       activeFilter?.section === getSectionId && activeFilter?.value === getCurrentOption;
 
-    const nextFilter = currentlySelected
-      ? null
-      : { section: getSectionId, value: getCurrentOption };
-
-    setActiveFilter(nextFilter);
-    sessionStorage.setItem("activeFilter", JSON.stringify(nextFilter));
+    if (currentlySelected) {
+      setSearchParams(new URLSearchParams());
+      sessionStorage.removeItem("activeFilter");
+    } else {
+      setSearchParams(
+        new URLSearchParams(`${getSectionId}=${encodeURIComponent(getCurrentOption)}`)
+      );
+      sessionStorage.setItem(
+        "activeFilter",
+        JSON.stringify({ section: getSectionId, value: getCurrentOption })
+      );
+    }
   }
 
   
@@ -121,29 +144,18 @@ function ShoppingListing() {
   }
 
   useEffect(() => {
-    setSort("price-lowtohigh");
-    const stored = JSON.parse(sessionStorage.getItem("activeFilter"));
-    if (categorySearchParam) {
-      setActiveFilter({ section: "category", value: categorySearchParam });
-    } else if (stored && stored.section && stored.value) {
-      setActiveFilter(stored);
-    } else {
-      setActiveFilter(null);
-    }
-  }, [categorySearchParam]);
-
-  useEffect(() => {
-    const createQueryString = createSearchParamsHelper(activeFilter);
-    setSearchParams(new URLSearchParams(createQueryString));
-  }, [activeFilter]);
-
-  useEffect(() => {
     if (sort !== null) {
-      const filterParams = activeFilter
-        ? { [activeFilter.section]: [activeFilter.value] }
-        : {};
+      const isAllCategory =
+        activeFilter?.section === "category" && activeFilter?.value === "all";
+      const filterParams =
+        activeFilter && !isAllCategory
+          ? { [activeFilter.section]: [activeFilter.value] }
+          : {};
       dispatch(
-        fetchAllFilteredProducts({ filterParams, sortParams: sort })
+        fetchAllFilteredProducts({
+          filterParams,
+          sortParams: sort === "category-order" ? "price-lowtohigh" : sort,
+        })
       );
     }
   }, [dispatch, sort, activeFilter]);
@@ -188,6 +200,10 @@ function ShoppingListing() {
       result = [...result]
         .filter((p) => (p.averageReview || 0) > 0)
         .sort((a, b) => (b.averageReview || 0) - (a.averageReview || 0));
+    }
+
+    if (sort === "category-order" && activeFilter?.section !== "bestSelling") {
+      result = sortByCategoryOrder(result);
     }
 
     return result;

@@ -110,9 +110,14 @@ function Footer() {
               <li>info@woodenhive.com</li>
 
               <li>
-                Plot # 3 Climax Garden Near Allena Hotel GT Road Gujranwala Pakistan
+                Head Office: House # 230 Block-C Ghulshan Ravi Lahore Pakistan
               </li>
-              
+              <li>
+                Corporate Office: Plot # 3 Climax Garden Near Allena Hotel GT Road Gujranwala Pakistan
+              </li>
+              <li>
+                Production Office: Rana Market Railway Road Sillanwali Sargodha Pakistan
+              </li>
             </ul>
           </div>
 

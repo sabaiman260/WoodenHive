@@ -1,8 +1,23 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { categoryOrder } from "@/config";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
+}
+
+// Sorts products by category (Home, Office, Kitchen, Gifts, Accessories), then by price ascending within each category
+export function sortByCategoryOrder(products) {
+  if (!products || products.length === 0) return [];
+  const rank = (category) => {
+    const index = categoryOrder.indexOf(category);
+    return index === -1 ? categoryOrder.length : index;
+  };
+  return [...products].sort((a, b) => {
+    const categoryDiff = rank(a?.category) - rank(b?.category);
+    if (categoryDiff !== 0) return categoryDiff;
+    return (a?.salePrice || a?.price || 0) - (b?.salePrice || b?.price || 0);
+  });
 }
 
 // Rewrite a Cloudinary delivery URL to auto-select the best format (e.g. WebP)

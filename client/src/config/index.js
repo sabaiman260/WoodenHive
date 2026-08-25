@@ -65,8 +65,8 @@ export const addProductFormElements = [
       { id: "office", label: "Office" },
       { id: "kitchen", label: "Kitchen" },
       { id: "gifts", label: "Gifts" },
-      { id: "accessories", label: "Accessories" },
-      { id: "home", label: "Home" },
+      { id: "accessories", label: "Special Deals" },
+      { id: "home", label: "Home & Decor" },
     ],
   },
   {
@@ -166,18 +166,13 @@ export const addProductFormElements = [
 
 export const shoppingViewHeaderMenuItems = [
   {
-    id: "home",
+    id: "home-page",
     label: "Home",
     path: "/shop/home",
   },
   {
     id: "products",
-    label: "Products",
-    path: "/shop/listing",
-  },
-  {
-    id: "office",
-    label: "Office",
+    label: "All Products",
     path: "/shop/listing",
   },
   {
@@ -186,20 +181,19 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
+    id: "office",
+    label: "Office",
+    path: "/shop/listing",
+  },
+  {
+    id: "home",
+    label: "Home & Decor",
+    path: "/shop/listing",
+  },
+  {
     id: "gifts",
     label: "Gifts",
     path: "/shop/listing",
-  },
-  
-  {
-    id: "accessories",
-    label: "Accessories",
-    path: "/shop/listing",
-  },
-  {
-    id: "search",
-    label: "Search",
-    path: "/shop/search",
   },
 ];
 
@@ -207,17 +201,21 @@ export const categoryOptionsMap = {
   office: "Office",
   kitchen: "Kitchen",
   gifts: "Gifts",
-  accessories: "Accessories",
-  home: "Home",
+  accessories: "Special Deals",
+  home: "Home & Decor",
 };
+
+// Display order for products grouped by category: Home, Office, Kitchen, Gifts, Accessories
+export const categoryOrder = ["home", "office", "kitchen", "gifts", "accessories"];
 
 export const filterOptions = {
   category: [
+    { id: "all", label: "All" },
     { id: "office", label: "Office" },
     { id: "kitchen", label: "Kitchen" },
     { id: "gifts", label: "Gifts" },
-    { id: "accessories", label: "Accessories" },
-    { id: "home", label: "Home" },
+    { id: "accessories", label: "Special Deals" },
+    { id: "home", label: "Home & Decor" },
   ],
   price: [
     { id: "0-2000", label: "Under PKR 2,000" },
@@ -236,6 +234,7 @@ export const filterOptions = {
 };
 
 export const sortOptions = [
+  { id: "category-order", label: "Recommended" },
   { id: "price-lowtohigh", label: "Price: Low to High" },
   { id: "price-hightolow", label: "Price: High to Low" },
   { id: "title-atoz", label: "Title: A to Z" },

@@ -1,4 +1,5 @@
-import { LogOut, Menu, UserCog, UserCircle2 } from "lucide-react";
+import PropTypes from "prop-types";
+import { LogOut, Menu, UserCog, UserCircle2, Search } from "lucide-react";
 import {
   Link,
   useLocation,
@@ -19,10 +20,8 @@ import {
 } from "../ui/dropdown-menu";
 import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
-import { useEffect, useState } from "react";
-import { fetchCartItems } from "@/store/shop/cart-slice";
+import { useState } from "react";
 import { Label } from "../ui/label";
-import { getOrCreateGuestId } from "@/lib/utils";
 
 /* ================= MENU ITEMS ================= */
 function MenuItems({ closeSheet }) {
@@ -31,16 +30,15 @@ function MenuItems({ closeSheet }) {
   const [, setSearchParams] = useSearchParams();
 
   function handleNavigate(menuItem) {
-    sessionStorage.removeItem("filters");
     // Map nav items to category filters (for listing page)
-    let categoryKey = null;
+    let categoryKey = null
     switch (menuItem.id) {
       case "office":
       case "kitchen":
       case "gifts":
       case "accessories":
       case "home":
-        categoryKey = menuItem.id === "home" ? "home" : menuItem.id;
+        categoryKey = menuItem.id;
         break;
       case "home-category":
         categoryKey = "home";
@@ -49,20 +47,17 @@ function MenuItems({ closeSheet }) {
         categoryKey = null;
     }
 
-    const currentFilter = categoryKey ? { category: [categoryKey] } : null;
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    sessionStorage.removeItem("activeFilter");
 
-    if (location.pathname.includes("listing") && currentFilter) {
+    if (categoryKey && location.pathname.includes("listing")) {
       setSearchParams(new URLSearchParams(`?category=${categoryKey}`));
-      if (typeof closeSheet === "function") closeSheet();
     } else if (categoryKey) {
-      // go to listing so filters apply
-      navigate("/shop/listing");
-      if (typeof closeSheet === "function") closeSheet();
+      // go to listing with the category in the URL so it applies immediately
+      navigate(`/shop/listing?category=${categoryKey}`);
     } else {
       navigate(menuItem.path);
-      if (typeof closeSheet === "function") closeSheet();
     }
+    if (typeof closeSheet === "function") closeSheet();
   }
 
   return (
@@ -80,6 +75,10 @@ function MenuItems({ closeSheet }) {
   );
 }
 
+MenuItems.propTypes = {
+  closeSheet: PropTypes.func,
+};
+
 /* ================= RIGHT CONTENT ================= */
 function HeaderRightContent() {
   const navigate = useNavigate();
@@ -89,6 +88,15 @@ function HeaderRightContent() {
 
   return (
     <div className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={() => navigate("/shop/search")}
+        className="cursor-pointer text-muted-foreground transition hover:text-foreground"
+        aria-label="Search products"
+      >
+        <Search className="h-5 w-5" />
+      </button>
+
       <UserCartWrapper />
 
       {user ? (

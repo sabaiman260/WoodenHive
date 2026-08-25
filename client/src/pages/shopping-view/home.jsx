@@ -14,7 +14,7 @@ import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
-import { getOrCreateGuestId } from "@/lib/utils";
+import { getOrCreateGuestId, sortByCategoryOrder } from "@/lib/utils";
 import { useSeo } from "@/lib/useSeo";
 import { gtmAddToCart } from "@/lib/gtm";
 import HeroSection from "@/components/shopping-view/hero-section";
@@ -46,12 +46,8 @@ function ShoppingHome() {
 
   /* ================= HANDLERS ================= */
   function handleNavigateToListingPage(item, section) {
-    sessionStorage.removeItem("filters");
-    sessionStorage.setItem(
-      "filters",
-      JSON.stringify({ [section]: [item.id] })
-    );
-    navigate("/shop/listing");
+    sessionStorage.removeItem("activeFilter");
+    navigate(`/shop/listing?${section}=${item.id}`);
   }
 
   
@@ -137,7 +133,7 @@ function ShoppingHome() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList.length > 0 ? (
-              productList.map((product) => (
+              sortByCategoryOrder(productList).map((product) => (
                 <ShoppingProductTile
                   key={product._id}
                   product={product}
