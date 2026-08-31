@@ -35,6 +35,7 @@ const addProduct = async (req, res) => {
       size,
       colors,
       averageReview,
+      bestSeller,
       woodType,
       dimensions,
       weight,
@@ -59,6 +60,7 @@ const addProduct = async (req, res) => {
       size: size || "",
       colors: Array.isArray(colors) ? colors : colors ? String(colors).split(",").map((c) => c.trim()).filter(Boolean) : [],
       averageReview,
+      bestSeller: !!bestSeller,
       woodType: woodType || "",
       dimensions: dimensions || "",
       weight: weight || "",
@@ -118,6 +120,7 @@ const editProduct = async (req, res) => {
       size,
       colors,
       averageReview,
+      bestSeller,
       woodType,
       dimensions,
       weight,
@@ -157,6 +160,8 @@ const editProduct = async (req, res) => {
         : String(colors).split(",").map((c) => c.trim()).filter(Boolean)
       : findProduct.colors;
     findProduct.averageReview = averageReview || findProduct.averageReview;
+    findProduct.bestSeller =
+      bestSeller !== undefined ? !!bestSeller : findProduct.bestSeller;
     findProduct.woodType = woodType !== undefined ? woodType : findProduct.woodType;
     findProduct.dimensions = dimensions !== undefined ? dimensions : findProduct.dimensions;
     findProduct.weight = weight !== undefined ? weight : findProduct.weight;

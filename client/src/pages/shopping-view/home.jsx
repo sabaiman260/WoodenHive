@@ -18,6 +18,9 @@ import { getOrCreateGuestId, sortByCategoryOrder } from "@/lib/utils";
 import { useSeo } from "@/lib/useSeo";
 import { gtmAddToCart } from "@/lib/gtm";
 import HeroSection from "@/components/shopping-view/hero-section";
+import BestSellers from "@/components/shopping-view/best-sellers";
+import WhyChoose from "@/components/shopping-view/why-choose";
+import AboutWoodenHive from "@/components/shopping-view/about-woodenhive";
 
 /* ================= IMAGE BASED CATEGORIES ================= */
 const categories = [
@@ -124,30 +127,56 @@ function ShoppingHome() {
         </div>
       </section>
 
-      {/* ================= PRODUCTS ================= */}
+      {/* ================= BEST SELLERS ================= */}
+      <BestSellers
+        products={productList}
+        handleAddtoCart={handleAddtoCart}
+      />
+
+      {/* ================= WHY CHOOSE WOODENHIVE ================= */}
+      <WhyChoose />
+
+      {/* ================= FEATURED PRODUCTS ================= */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
+            Featured Products
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList.length > 0 ? (
-              sortByCategoryOrder(productList).map((product) => (
-                <ShoppingProductTile
-                  key={product._id}
-                  product={product}
-                  handleAddtoCart={handleAddtoCart}
-                />
-              ))
+              sortByCategoryOrder(productList)
+                .slice(0, 8)
+                .map((product) => (
+                  <ShoppingProductTile
+                    key={product._id}
+                    product={product}
+                    handleAddtoCart={handleAddtoCart}
+                  />
+                ))
             ) : (
               <p className="col-span-full text-center">
                 No Products Available
               </p>
             )}
           </div>
+
+          {productList.length > 8 && (
+            <div className="mt-10 flex justify-center">
+              <Button
+                size="lg"
+                className="px-10"
+                onClick={() => navigate("/shop/listing")}
+              >
+                View All Products
+              </Button>
+            </div>
+          )}
         </div>
       </section>
+
+      {/* ================= ABOUT WOODENHIVE ================= */}
+      <AboutWoodenHive />
 
       {/* Product details now open via route /shop/product/:id */}
     </div>

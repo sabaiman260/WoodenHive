@@ -163,6 +163,14 @@ export const addProductFormElements = [
     placeholder: "e.g. sheesham wood wall clock, wooden wall clock pakistan",
     helpText: "Keywords customers might search for on Google.",
   },
+  {
+    label: "Best Seller",
+    name: "bestSeller",
+    componentType: "switch",
+    switchLabel: "Feature in Best Sellers on home page",
+    helpText:
+      "When on, this product appears in the Best Sellers section of the landing page.",
+  },
 ];
 
 export const shoppingViewHeaderMenuItems = [

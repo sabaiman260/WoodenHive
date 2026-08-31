@@ -68,6 +68,28 @@ function CommonForm({
         );
 
         break;
+      case "switch":
+      case "checkbox":
+        element = (
+          <label className="flex cursor-pointer items-center gap-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 accent-primary"
+              checked={Boolean(formData[getControlItem.name])}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  [getControlItem.name]: event.target.checked,
+                })
+              }
+            />
+            <span className="text-sm text-muted-foreground">
+              {getControlItem.switchLabel || "Enabled"}
+            </span>
+          </label>
+        );
+
+        break;
       case "textarea":
         element = (
           <Textarea

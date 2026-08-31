@@ -24,6 +24,7 @@ const ProductSchema = new mongoose.Schema(
     size: String,
     colors: [String],
     averageReview: Number,
+    bestSeller: { type: Boolean, default: false },
     woodType: String,
     dimensions: String,
     weight: String,

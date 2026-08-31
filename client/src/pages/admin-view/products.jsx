@@ -31,6 +31,7 @@ const initialFormData = {
   colors: "",
   totalStock: "",
   averageReview: 0,
+  bestSeller: false,
   woodType: "",
   dimensions: "",
   weight: "",
