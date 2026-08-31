@@ -67,6 +67,7 @@ export const addProductFormElements = [
       { id: "gifts", label: "Gifts" },
       { id: "accessories", label: "Special Deals" },
       { id: "home", label: "Home & Decor" },
+      { id: "home-category", label: "Home" },
     ],
   },
   {
@@ -203,10 +204,11 @@ export const categoryOptionsMap = {
   gifts: "Gifts",
   accessories: "Special Deals",
   home: "Home & Decor",
+  "home-category": "Home",
 };
 
-// Display order for products grouped by category: Home, Office, Kitchen, Gifts, Accessories
-export const categoryOrder = ["home", "office", "kitchen", "gifts", "accessories"];
+// Display order for products grouped by category: Home, Kitchen, Office, Home & Decor, Gifts, Special Deals
+export const categoryOrder = ["home-category", "kitchen", "office", "home", "gifts", "accessories"];
 
 export const filterOptions = {
   category: [
@@ -216,6 +218,7 @@ export const filterOptions = {
     { id: "gifts", label: "Gifts" },
     { id: "accessories", label: "Special Deals" },
     { id: "home", label: "Home & Decor" },
+    { id: "home-category", label: "Home" },
   ],
   price: [
     { id: "0-2000", label: "Under PKR 2,000" },

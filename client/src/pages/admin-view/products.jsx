@@ -82,6 +82,15 @@ function AdminProducts() {
             setCurrentEditedId(null);
             setImageFile(null);
             setUploadedImageUrl([]);
+            toast({
+              title: "Product updated successfully",
+            });
+          } else {
+            console.error("Failed to update product:", data);
+            toast({
+              title: data?.payload?.message || data?.error?.message || "Failed to update product",
+              variant: "destructive",
+            });
           }
         })
       : dispatch(
@@ -105,6 +114,12 @@ function AdminProducts() {
             toast({
               title: "Product add successfully",
             });
+          } else {
+            console.error("Failed to add product:", data);
+            toast({
+              title: data?.payload?.message || data?.error?.message || "Failed to add product",
+              variant: "destructive",
+            });
           }
         });
   }
@@ -117,15 +132,29 @@ function AdminProducts() {
     });
   }
 
-  function isFormValid() {
-    // require these fields only
-    const required = ["title", "description", "category", "price", "totalStock"];
-    const hasRequired = required.every(
-      (key) => formData[key] !== null && formData[key] !== ""
+  const REQUIRED_FIELD_LABELS = {
+    title: "Title",
+    description: "Description",
+    category: "Category",
+    price: "Actual Price",
+    totalStock: "Total Stock",
+  };
+
+  function getMissingFields() {
+    const missing = Object.keys(REQUIRED_FIELD_LABELS).filter(
+      (key) => formData[key] === null || formData[key] === undefined || formData[key] === ""
     );
-    // encourage complete, SEO-friendly product descriptions
-    const hasCompleteDescription = String(formData.description || "").trim().length >= 40;
-    return hasRequired && hasCompleteDescription;
+    if (
+      !missing.includes("description") &&
+      String(formData.description || "").trim().length < 40
+    ) {
+      missing.push("description");
+    }
+    return missing;
+  }
+
+  function isFormValid() {
+    return getMissingFields().length === 0;
   }
 
   useEffect(() => {
@@ -199,6 +228,17 @@ function AdminProducts() {
               formControls={addProductFormElements}
               isBtnDisabled={!isFormValid()}
             />
+            {getMissingFields().length > 0 && (
+              <p className="mt-2 text-xs text-destructive">
+                Missing/incomplete: {getMissingFields()
+                  .map((key) =>
+                    key === "description"
+                      ? "Description (min. 40 characters)"
+                      : REQUIRED_FIELD_LABELS[key]
+                  )
+                  .join(", ")}
+              </p>
+            )}
           </div>
         </SheetContent>
       </Sheet>
