@@ -31,13 +31,49 @@ function ShippingReturns() {
             </div>
 
             {/* Return Policy */}
-            <div className="space-y-2 border-t border-gray-200 pt-4">
+            <div className="space-y-3 border-t border-gray-200 pt-4">
               <h3 className="text-[15px] font-semibold text-gray-900">Return Policy</h3>
               <p className="text-sm leading-6">
-                We accept returns within <strong>1 week</strong> of the delivery date on items
-                that are unused and in their original condition with all packaging intact.
-                To initiate a return, please contact us via email with your order number
-                and a brief reason for the return.
+                We accept returns only for genuine issues with your order. Please read
+                the points below carefully before requesting a return.
+              </p>
+
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-gray-900">Returns are accepted when:</p>
+                <ul className="list-disc pl-5 text-sm leading-6 space-y-1">
+                  <li>The wrong product is delivered (an entirely different item than ordered).</li>
+                  <li>The product is received damaged, defective, or with a manufacturing fault.</li>
+                  <li>We have sent an incorrect size (not a sizing issue caused by normal wear).</li>
+                </ul>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-gray-900">Returns are not accepted for:</p>
+                <ul className="list-disc pl-5 text-sm leading-6 space-y-1">
+                  <li>Change of mind or buyer&apos;s remorse.</li>
+                  <li>Colour preference or perceived difference due to screen or lighting.</li>
+                  <li>Normal wear and tear, or damage caused after delivery.</li>
+                </ul>
+              </div>
+
+              <p className="text-sm leading-6">
+                A return request must be made <strong>within 7 days of delivery</strong>.
+              </p>
+
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-gray-900">To request a return, please provide:</p>
+                <ul className="list-disc pl-5 text-sm leading-6 space-y-1">
+                  <li>Your order number and the product SKU or name.</li>
+                  <li>A clear photo or video showing the issue.</li>
+                  <li>The delivery date and the delivery address used.</li>
+                </ul>
+              </div>
+
+              <p className="text-sm leading-6">
+                Our support team will verify the issue and may ask for additional photos
+                or details. Once verified and approved, you will receive either a
+                replacement or a return/refund, with further instructions sent through
+                email or WhatsApp. No online return form is provided on the website.
               </p>
             </div>
 
