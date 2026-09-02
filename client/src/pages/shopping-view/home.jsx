@@ -128,10 +128,7 @@ function ShoppingHome() {
       </section>
 
       {/* ================= BEST SELLERS ================= */}
-      <BestSellers
-        products={productList}
-        handleAddtoCart={handleAddtoCart}
-      />
+      <BestSellers />
 
       {/* ================= WHY CHOOSE WOODENHIVE ================= */}
       <WhyChoose />
