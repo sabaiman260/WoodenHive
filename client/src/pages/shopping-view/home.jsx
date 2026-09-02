@@ -93,7 +93,7 @@ function ShoppingHome() {
       <HeroSection />
 
       {/* ================= CATEGORIES ================= */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Shop by Category
@@ -129,9 +129,6 @@ function ShoppingHome() {
 
       {/* ================= BEST SELLERS ================= */}
       <BestSellers />
-
-      {/* ================= WHY CHOOSE WOODENHIVE ================= */}
-      <WhyChoose />
 
       {/* ================= FEATURED PRODUCTS ================= */}
       <section className="py-12">
@@ -171,6 +168,9 @@ function ShoppingHome() {
           )}
         </div>
       </section>
+
+      {/* ================= WHY CHOOSE WOODENHIVE ================= */}
+      <WhyChoose />
 
       {/* ================= ABOUT WOODENHIVE ================= */}
       <AboutWoodenHive />

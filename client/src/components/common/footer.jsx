@@ -2,17 +2,17 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-10 border-t border-white/10 bg-black text-white">
+    <footer className="mt-10 border-t border-white/10 bg-[#1c1712] text-white">
       <div className="mx-auto flex min-h-[50vh] max-w-7xl flex-col gap-10 px-6 py-12 lg:flex-row lg:items-start lg:justify-between lg:min-h-[60vh]">
         {/* Brand + Story */}
         <div className="max-w-sm space-y-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-neutral-400">
+          <p className="text-xs uppercase tracking-[0.25em] text-stone-400">
             Premium Wooden Craft
           </p>
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-            WoodenHive
+            Wooden Hive
           </h2>
-          <p className="text-sm text-neutral-300">
+          <p className="text-sm text-stone-300">
             Handcrafted wooden furniture and decor made from sustainably
             sourced timber, designed to bring warmth and character to every
             corner of your home.
@@ -21,7 +21,7 @@ function Footer() {
 
 
             {/* Payment Section */}
-      <div className="border-t border-white/10 bg-black">
+      <div className="border-t border-white/10 bg-[#1c1712]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2  py-2">
           <h3 className="text-sm font-semibold lowercase tracking-wide text-white">
             Payment
@@ -73,19 +73,19 @@ function Footer() {
         {/* Navigation Columns */}
         <div className="grid flex-1 gap-y-8 gap-x-16 text-sm sm:grid-cols-2 lg:grid-cols-3">
           <div className="min-w-[140px] space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+            <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
               Shop
             </p>
-            <ul className="space-y-2 text-neutral-300">
+            <ul className="space-y-2 text-stone-300">
               <li>
-                <a href="/shop/home" className="transition hover:text-neutral-100">
+                <a href="/shop/home" className="transition hover:text-white">
                   Home
                 </a>
               </li>
               <li>
                 <a
                   href="/shop/listing"
-                  className="transition hover:text-neutral-100"
+                  className="transition hover:text-white"
                 >
                   All Products
                 </a>
@@ -93,7 +93,7 @@ function Footer() {
               <li>
                 <a
                   href="/shop/account"
-                  className="transition hover:text-neutral-100"
+                  className="transition hover:text-white"
                 >
                   My Orders
                 </a>
@@ -102,10 +102,10 @@ function Footer() {
           </div>
 
           <div className="min-w-[180px] space-y-3 break-words pr-4 leading-relaxed">
-            <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+            <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
               Support
             </p>
-            <ul className="space-y-2 text-neutral-300">
+            <ul className="space-y-2 text-stone-300">
               <li>+923110719503</li>
               <li>info@woodenhive.com</li>
 
@@ -122,14 +122,14 @@ function Footer() {
           </div>
 
           <div className="min-w-[150px] space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+            <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
               Policies
             </p>
-            <ul className="space-y-2 text-neutral-300">
+            <ul className="space-y-2 text-stone-300">
               <li>
                 <a
                   href="/shop/shipping-returns"
-                  className="transition hover:text-neutral-100"
+                  className="transition hover:text-white"
                 >
                   Shipping & Returns
                 </a>
@@ -137,7 +137,7 @@ function Footer() {
               <li>
                 <a
                   href="/shop/warranty-care"
-                  className="transition hover:text-neutral-100"
+                  className="transition hover:text-white"
                 >
                   Warranty & Care
                 </a>
@@ -145,7 +145,7 @@ function Footer() {
               <li>
                 <a
                   href="/shop/privacy-policy"
-                  className="transition hover:text-neutral-100"
+                  className="transition hover:text-white"
                 >
                   Privacy Policy
                 </a>
@@ -156,12 +156,12 @@ function Footer() {
 
         {/* Newsletter + Social */}
         <div className="max-w-xs space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+          <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
             Stay inspired
           </p>
-          <p className="text-sm text-neutral-300">
+          <p className="text-sm text-stone-300">
             Subscribe for styling tips, launch updates, and exclusive
-            offers on WoodenHive collections.
+            offers on Wooden Hive collections.
           </p>
           <form
             className="flex flex-col gap-3 text-sm sm:flex-row"
@@ -170,17 +170,17 @@ function Footer() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="h-10 flex-1 rounded-full border border-white/30 bg-white/5 px-3 text-sm text-white placeholder:text-neutral-400 outline-none focus:border-white focus:ring-1 focus:ring-white"
+              className="h-10 flex-1 rounded-full border border-white/30 bg-white/5 px-3 text-sm text-white placeholder:text-stone-400 outline-none focus:border-white focus:ring-1 focus:ring-white"
             />
             <button
               type="submit"
-              className="h-10 rounded-full bg-white px-4 text-xs font-semibold uppercase tracking-wide text-black shadow-sm transition hover:bg-neutral-200"
+              className="h-10 rounded-full bg-white px-4 text-xs font-semibold uppercase tracking-wide text-black shadow-sm transition hover:bg-stone-200"
             >
               Subscribe
             </button>
           </form>
-          <div className="space-y-3 text-xs text-neutral-300">
-            <p className="font-medium">Follow WoodenHive</p>
+          <div className="space-y-3 text-xs text-stone-300">
+            <p className="font-medium">Follow Wooden Hive</p>
             <div className="flex flex-wrap gap-3">
               {/* TikTok */}
               <a
@@ -282,9 +282,9 @@ function Footer() {
 
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10 bg-black/95">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-6 py-4 text-xs text-neutral-400 sm:flex-row sm:justify-between">
-          <p>© {year} WoodenHive. All rights reserved.</p>
+      <div className="border-t border-white/10 bg-[#171310]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-6 py-4 text-xs text-stone-400 sm:flex-row sm:justify-between">
+          <p>© {year} Wooden Hive. All rights reserved.</p>
           <p className="text-[11px]">
             Made with care for modern, sustainable wooden homes.
           </p>
