@@ -25,12 +25,12 @@ function WhyChoose() {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
           {/* Left: heading + numbered features */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold">Why Choose Us</h2>
             <p className="mt-3 max-w-md text-muted-foreground">
-              Craftsmanship, quality and service that make every WoodenHive
+              Craftsmanship, quality and service that make every Wooden Hive
               piece worth bringing home.
             </p>
 
@@ -48,14 +48,18 @@ function WhyChoose() {
             </div>
           </div>
 
-          {/* Right: image */}
-          <div className="shadow-lg">
+          {/* Right: image with an offset outline frame for depth */}
+          <div className="relative">
+            <div
+              className="absolute -bottom-6 -left-6 hidden h-full w-full border border-gray-300 lg:block"
+              aria-hidden="true"
+            />
             <img
               src="/w6.jpg"
-              alt="Handcrafted wooden furniture by WoodenHive"
-              className="h-[320px] w-full object-cover md:h-[400px]"
+              alt="Handcrafted wooden furniture by Wooden Hive"
+              className="relative h-[420px] w-full border border-gray-200 bg-white object-cover md:h-[520px]"
               onError={(e) => {
-                e.target.src = "/bg.jpg";
+                e.currentTarget.src = "/bg.jpg";
               }}
             />
           </div>
